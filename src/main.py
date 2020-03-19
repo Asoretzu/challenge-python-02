@@ -1,11 +1,41 @@
 # Resolve the problem!!
 import string
+from random import randint
 
 SYMBOLS = list('!"#$%&\'()*+,-./:;?@[]^_`{|}~')
+UPPER_ALPHABET = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+LOWER_ALPHABET = list("abcdefghijklmnopqrstuvwxyz")
+NUMBERS = list("1234567890")
+
+
+def choose_letter():
+    select_list = randint(1, 12)
+
+    if select_list <= 3:
+        index = randint(0, len(UPPER_ALPHABET)-1)
+        return UPPER_ALPHABET[index]
+
+    if select_list <= 6:
+        index = randint(0, len(LOWER_ALPHABET)-1)
+        return LOWER_ALPHABET[index]
+
+    if select_list <= 9:
+        index = randint(0, len(SYMBOLS)-1)
+        return SYMBOLS[index]
+
+    index = randint(0, len(NUMBERS)-1)
+    return NUMBERS[index]
 
 
 def generate_password():
-    # Start coding here
+    password_len = randint(8, 16)
+    password = ""
+
+    for i in range(password_len):
+        letter = choose_letter()
+        password += letter
+    
+    return password
 
 
 def validate(password):
