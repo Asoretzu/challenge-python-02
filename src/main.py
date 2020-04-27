@@ -1,41 +1,38 @@
 # Resolve the problem!!
 import string
-from random import randint
+from random import randint, choice, shuffle
 
 SYMBOLS = list('!"#$%&\'()*+,-./:;?@[]^_`{|}~')
 UPPER_ALPHABET = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 LOWER_ALPHABET = list("abcdefghijklmnopqrstuvwxyz")
 NUMBERS = list("1234567890")
+ALL_ELEMENTS = SYMBOLS + UPPER_ALPHABET + LOWER_ALPHABET + NUMBERS
 
 
-def choose_letter():
-    select_list = randint(1, 12)
+def pass_elements():
+    password = choice(SYMBOLS) + choice(UPPER_ALPHABET) + choice(LOWER_ALPHABET) + choice(NUMBERS)
 
-    if select_list <= 3:
-        index = randint(0, len(UPPER_ALPHABET)-1)
-        return UPPER_ALPHABET[index]
+    return password
 
-    if select_list <= 6:
-        index = randint(0, len(LOWER_ALPHABET)-1)
-        return LOWER_ALPHABET[index]
 
-    if select_list <= 9:
-        index = randint(0, len(SYMBOLS)-1)
-        return SYMBOLS[index]
+def other_elements(length):
+    password = ""
 
-    index = randint(0, len(NUMBERS)-1)
-    return NUMBERS[index]
+    for _ in range(length):
+        password += choice(ALL_ELEMENTS)
+
+    return password
 
 
 def generate_password():
-    password_len = randint(8, 16)
-    password = ""
+    length = randint(8, 16) - 4
 
-    for i in range(password_len):
-        letter = choose_letter()
-        password += letter
+    temp_pass = pass_elements() + other_elements(length)
+    password = list(temp_pass)
+
+    shuffle(password)
     
-    return password
+    return "".join(password)
 
 
 def validate(password):
